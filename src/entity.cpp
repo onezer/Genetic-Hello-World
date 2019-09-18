@@ -50,13 +50,15 @@ std::string Entity::Mutation() const
 {
 	std::string newGene(gene);
 
-	int first = rand() % (int)gene.size();
-	int second = rand() % (int)gene.size();
-	while (first == second) {
-		second = rand() % (int)gene.size();
-	}
+	for (int i = 0; i < rand() % 4 + 1; ++i) {
+		int first = rand() % (int)gene.size();
+		int second = rand() % (int)gene.size();
+		while (first == second) {
+			second = rand() % (int)gene.size();
+		}
 
-	std::swap(newGene[first], newGene[second]);
+		std::swap(newGene[first], newGene[second]);
+	}
 
 	return newGene;
 }

@@ -48,6 +48,9 @@ int Population::Iterate()
 	SortGenePool();
 
 	for (int i = 0; i < parameters.die_num; ++i) {
+		if (genePool.size() == 1) {
+			throw std::exception("Population is dead!");
+		}
 		genePool.pop_back();
 	}
 
