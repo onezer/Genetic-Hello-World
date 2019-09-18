@@ -1,33 +1,24 @@
+
+
 cmake_minimum_required (VERSION 3.15)
-project (EvolutionaryRobotSwarm)
+project (GeneticHelloWorld)
 
 set(srcs 
-	Source/FileWriter.cpp
-	Source/Main.cpp
-	Source/Map.cpp 
-	Source/MapHandler.cpp 
-	Source/Robot.cpp 
-	Source/Simulation.cpp 
-	
-	Header/Node.hpp 
-	Header/Position.hpp 
-	Header/e_collision.hpp
-	Header/Telemetry.hpp
+	src/main.cpp
+	src/entity.cpp
+	src/genetic.cpp
+	src/population.cpp
 	)
 	
 set(headers
-	Header/FileWriter.h 
-	Header/Map.h 
-	Header/MapHandler.h 
-	Header/Robot.h 
-	Header/Simulation.h 
-	Header/iBehaviour.h
-	Header/iBehaviourFactory.h
-	Header/iCost.h 
+	header/entity.h
+	header/genetic.h
+	header/population.h
+	header/parameters.hpp
 )
 
-add_executable(EvolutionaryRobotSwarm ${srcs} ${headers})
+add_executable(${PROJECT_NAME} ${srcs} ${headers})
 
-target_include_directories(EvolutionaryRobotSwarm PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Header)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/header)
 
 set(CMAKE_SUPPRESS_REGENERATION true)
