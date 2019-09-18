@@ -2,6 +2,8 @@
 
 #include <math.h>
 #include <stdlib.h>
+#include <unordered_map>
+
 
 Entity::Entity(const std::string & gene, const std::string goal) : gene{ gene }, goal{ goal }
 {
@@ -72,7 +74,7 @@ int Entity::Position(char c, const std::string & s) const
 bool Entity::CheckValidity() const
 {
 	for (int i = 0; i < goal.size(); ++i) {
-		if (Position(goal[i], gene) == -1) {
+		if (gene[i] != goal[i]) {
 			return false;
 		}
 	}
