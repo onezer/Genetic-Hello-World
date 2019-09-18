@@ -1,11 +1,16 @@
 #pragma once
 
-#include"parameters.hpp"
-#include<string>
+#include "parameters.hpp"
+#include <string>
+#include "population.h"
 
 class Genetic {
+	Population population;
+	Parameters parameters;
+	std::string goal;
+
 public:
-	Genetic();
+	Genetic(std::string goal, Parameters parameters);
 
 	void InitializePopulation(int num);
 

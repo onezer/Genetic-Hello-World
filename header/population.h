@@ -12,13 +12,16 @@ class Population {
 	std::vector<std::pair<int, Entity>> genePool;
 
 	std::string goal;
+	
+	Parameters parameters;
 
 public:
-	Population(int num, std::string goal);
+	Population();
+	Population(int num, std::string goal, Parameters parameters);
 
 	void CreateEntities(int num);
 	
-	int Iterate(Parameters parameters); //returns lowest cost
+	int Iterate(); //returns lowest cost
 	std::string BestGene();
 
 private:

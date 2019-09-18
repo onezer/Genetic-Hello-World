@@ -7,20 +7,26 @@
 
 Entity::Entity(const std::string & gene, const std::string goal) : gene{ gene }, goal{ goal }
 {
-	valid = CheckValidity();
 }
 
 int Entity::Cost() const
 {
 	int cost = 0;
+
+	//for (int i = 0; i < (int)gene.size(); ++i) {
+	//	int pos = Position(gene[i], goal);
+	//
+	//	if (pos == -1) {
+	//		throw std::exception("Invalid gene!");
+	//	}
+	//
+	//	cost += std::abs(pos - i);
+	//}
+
 	for (int i = 0; i < (int)gene.size(); ++i) {
-		int pos = Position(gene[i], goal);
-
-		if (pos == -1) {
-			throw std::exception("Invalid gene!");
+		if (gene[i] != goal[i]) {
+			++cost;
 		}
-
-		cost += std::abs(pos - i);
 	}
 
 	return cost;
@@ -69,16 +75,5 @@ int Entity::Position(char c, const std::string & s) const
 	}
 
 	return -1;
-}
-
-bool Entity::CheckValidity() const
-{
-	for (int i = 0; i < goal.size(); ++i) {
-		if (gene[i] != goal[i]) {
-			return false;
-		}
-	}
-
-	return true;
 }
 

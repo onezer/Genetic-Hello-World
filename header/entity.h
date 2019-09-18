@@ -7,9 +7,6 @@ class Entity {
 	std::string gene;
 	std::string goal;
 
-	bool valid;
-	
-
 public:
 	bool elite;
 
@@ -25,5 +22,4 @@ public:
 private:
 
 	int Position(char c, const std::string & s) const;
-	bool CheckValidity() const;
 };

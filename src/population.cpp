@@ -2,7 +2,11 @@
 
 #include <algorithm>
 
-Population::Population(int num, std::string goal) : goal{goal}
+Population::Population() : parameters{ Parameters(0, 0, 0) }
+{
+}
+
+Population::Population(int num, std::string goal, Parameters parameters) : goal{goal}, parameters{parameters}
 {
 	CreateEntities(num);
 }
@@ -13,16 +17,16 @@ void Population::CreateEntities(int num)
 		std::string currentGene;
 		std::string tempGoal(goal);
 		for (int j = 0; j < goal.size(); ++j) {
-			int pos = rand() % goal.size();
+			int pos = rand() % tempGoal.size();
 
-			currentGene.push_back(goal[pos]);
+			currentGene.push_back(tempGoal[pos]);
 			tempGoal.erase(pos, 1);
 		}
 		AddEntity(currentGene);
 	}
 }
 
-int Population::Iterate(Parameters parameters)
+int Population::Iterate()
 {
 	while (genePool.size() < parameters.max_population) {
 		if (rand() % 2 == 1) {
@@ -36,7 +40,7 @@ int Population::Iterate(Parameters parameters)
 				second = rand() % genePool.size();
 			}
 
-			AddEntity(genePool[first].second.Crossover(genePool[second].second.GetGene));
+			AddEntity(genePool[first].second.Crossover(genePool[second].second.GetGene()));
 		}
 		
 	}
@@ -63,6 +67,10 @@ bool Compare(const std::pair<int, Entity> & first, const std::pair<int, Entity> 
 
 void Population::AddEntity(std::string gene)
 {
+	if (genePool.size() == parameters.max_population) {
+		return;
+	}
+
 	Entity currentEntity(gene, goal);
 
 	genePool.push_back(std::pair<int, Entity>(currentEntity.Cost(), currentEntity));
