@@ -6,11 +6,16 @@
 int main(){
 
 	srand(time(NULL));
+
+	int initial_num = 100;
+	int max_population = 100;
+	int die_num = 50;
+	int new_entities = 30;
 	
-	Parameters parameters(100, 30, 50);
+	Parameters parameters(max_population, new_entities, die_num);
 	Genetic gen("Hello World!", parameters);
 
-	gen.InitializePopulation(100);
+	gen.InitializePopulation(initial_num);
 
 	int cost = 1;
 
