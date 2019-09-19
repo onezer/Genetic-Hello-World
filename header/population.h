@@ -25,6 +25,7 @@ public:
 	std::string BestGene();
 
 private:
-	void AddEntity(std::string);
+	void AddEntity(const std::string &);
+	void AddEntity(std::string &&);
 	void SortGenePool();
 };

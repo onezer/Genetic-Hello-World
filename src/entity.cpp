@@ -5,7 +5,11 @@
 #include <unordered_map>
 
 
-Entity::Entity(const std::string & gene, const std::string goal) : gene{ gene }, goal{ goal }
+Entity::Entity(const std::string & gene, const std::string & goal) : gene{ gene }, goal{ goal }
+{
+}
+
+Entity::Entity(std::string && gene, std::string && goal) : gene { gene }, goal{ goal }
 {
 }
 
@@ -65,7 +69,7 @@ std::string Entity::Mutation() const
 	return newGene;
 }
 
-std::string Entity::GetGene() const
+const std::string & Entity::GetGene() const
 {
 	return gene;
 }

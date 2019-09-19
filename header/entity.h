@@ -10,14 +10,14 @@ class Entity {
 public:
 	bool elite;
 
-	Entity(const std::string & gene, const std::string goal);
-
+	Entity(const std::string & gene, const std::string & goal);
+	Entity(std::string && gene, std::string && goal);
 	int Cost() const;
 
 	std::string Crossover(const std::string & other) const;
 	std::string Mutation() const;
 
-	std::string GetGene() const;
+	const std::string & GetGene() const;
 
 private:
 
