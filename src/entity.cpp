@@ -50,7 +50,9 @@ std::string Entity::Mutation() const
 {
 	std::string newGene(gene);
 
-	for (int i = 0; i < rand() % 4 + 1; ++i) {
+	int mutation_num = rand() % 4 + 1;
+
+	for (int i = 0; i < mutation_num; ++i) {
 		int first = rand() % (int)gene.size();
 		int second = rand() % (int)gene.size();
 		while (first == second) {

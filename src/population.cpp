@@ -9,6 +9,7 @@ Population::Population() : parameters{ Parameters(0, 0, 0) }
 Population::Population(int num, std::string goal, Parameters parameters) : goal{goal}, parameters{parameters}
 {
 	CreateEntities(num);
+	SortGenePool();
 }
 
 void Population::CreateEntities(int num)
