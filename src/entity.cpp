@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 
-Entity::Entity(const std::string & gene, const std::string goal) : gene{ gene }, goal{ goal }
+Entity::Entity(std::unique_ptr<std::string> gene, const std::string goal) : gene{ std::move(gene) }, goal{ goal }
 {
 }
 
@@ -23,8 +23,8 @@ int Entity::Cost() const
 	//	cost += std::abs(pos - i);
 	//}
 
-	for (int i = 0; i < (int)gene.size(); ++i) {
-		if (gene[i] != goal[i]) {
+	for (int i = 0; i < (int)gene->size(); ++i) {
+		if ((*gene)[i] != goal[i]) {
 			++cost;
 		}
 	}
@@ -32,42 +32,42 @@ int Entity::Cost() const
 	return cost;
 }
 
-std::string Entity::Crossover(const std::string & other) const
+std::unique_ptr<std::string> Entity::Crossover(const std::string & other) const
 {
-	std::string newGene;
+	std::unique_ptr<std::string> newGene = std::make_unique<std::string>();
 
-	for (int i = 0; i < (int)gene.size(); ++i) {
+	for (int i = 0; i < (int)gene->size(); ++i) {
 
-		char c = rand() % 2 == 1 ? gene[i] : other[i];
+		char c = rand() % 2 == 1 ? (*gene)[i] : other[i];
 
-		newGene.push_back(c);
+		newGene->push_back(c);
 	}
 
 	return newGene;
 }
 
-std::string Entity::Mutation() const
+std::unique_ptr<std::string> Entity::Mutation() const
 {
-	std::string newGene(gene);
+	std::unique_ptr<std::string> newGene = std::make_unique<std::string>(*gene);
 
 	int mutation_num = rand() % 4 + 1;
 
 	for (int i = 0; i < mutation_num; ++i) {
-		int first = rand() % (int)gene.size();
-		int second = rand() % (int)gene.size();
+		int first = rand() % (int)gene->size();
+		int second = rand() % (int)gene->size();
 		while (first == second) {
-			second = rand() % (int)gene.size();
+			second = rand() % (int)gene->size();
 		}
 
-		std::swap(newGene[first], newGene[second]);
+		std::swap((*newGene)[first], (*newGene)[second]);
 	}
 
 	return newGene;
 }
 
-std::string Entity::GetGene() const
+const std::string & Entity::GetGene() const
 {
-	return gene;
+	return *gene;
 }
 
 int Entity::Position(char c, const std::string & s) const

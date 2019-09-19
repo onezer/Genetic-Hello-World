@@ -1,23 +1,24 @@
 #pragma once
 
 #include<string>
+#include<memory>
 
 class Entity {
 	
-	std::string gene;
+	std::unique_ptr<std::string> gene;
 	std::string goal;
 
 public:
 	bool elite;
 
-	Entity(const std::string & gene, const std::string goal);
+	Entity(std::unique_ptr<std::string> gene, const std::string goal);
 
 	int Cost() const;
 
-	std::string Crossover(const std::string & other) const;
-	std::string Mutation() const;
+	std::unique_ptr<std::string> Crossover(const std::string & other) const;
+	std::unique_ptr<std::string> Mutation() const;
 
-	std::string GetGene() const;
+	const std::string & GetGene() const;
 
 private:
 

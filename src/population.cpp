@@ -1,6 +1,7 @@
 #include "population.h"
 
 #include <algorithm>
+#include <iostream>
 
 Population::Population() : parameters{ Parameters(0, 0, 0) }
 {
@@ -14,26 +15,23 @@ Population::Population(int num, std::string goal, Parameters parameters) : goal{
 
 void Population::CreateEntities(int num)
 {
-	for (int i = 0; i < num; ++i) {
-		std::string currentGene;
+	for (int i = 0; i < num && genePool.size() < parameters.max_population; ++i) {
+		std::unique_ptr<std::string> currentGene = std::make_unique<std::string>();
 		std::string tempGoal(goal);
 		for (int j = 0; j < goal.size(); ++j) {
 			int pos = rand() % tempGoal.size();
 
-			currentGene.push_back(tempGoal[pos]);
+			currentGene->push_back(tempGoal[pos]);
 			tempGoal.erase(pos, 1);
 		}
-		AddEntity(currentGene);
+		AddEntity(std::move(currentGene));
 	}
 }
 
 int Population::Iterate()
 {
 	while (genePool.size() < parameters.max_population) {
-		if (rand() % 2 == 1) {
-			AddEntity(genePool[rand() % genePool.size()].second.Mutation());
-		}
-		else {
+		if (rand() % 1 == 0 && genePool.size() > 1) {
 			int first = rand() % genePool.size();
 			int second = rand() % genePool.size();
 
@@ -41,7 +39,10 @@ int Population::Iterate()
 				second = rand() % genePool.size();
 			}
 
-			AddEntity(genePool[first].second.Crossover(genePool[second].second.GetGene()));
+			AddEntity(std::move(genePool[first].second.Crossover(genePool[second].second.GetGene())));
+		}
+		else {
+			AddEntity(std::move(genePool[rand() % genePool.size()].second.Mutation()));
 		}
 		
 	}
@@ -69,15 +70,15 @@ bool Compare(const std::pair<int, Entity> & first, const std::pair<int, Entity> 
 	return (first.first < second.first);
 }
 
-void Population::AddEntity(std::string gene)
+void Population::AddEntity(std::unique_ptr<std::string> gene)
 {
 	if (genePool.size() == parameters.max_population) {
 		return;
 	}
 
-	Entity currentEntity(gene, goal);
+	Entity currentEntity(std::move(gene), goal);
 
-	genePool.push_back(std::pair<int, Entity>(currentEntity.Cost(), currentEntity));
+	genePool.push_back(std::pair<int, Entity>(currentEntity.Cost(), std::move(currentEntity)));
 }
 
 void Population::SortGenePool()
