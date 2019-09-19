@@ -31,7 +31,7 @@ void Population::CreateEntities(int num)
 int Population::Iterate()
 {
 	while (genePool.size() < parameters.max_population) {
-		if (rand() % 1 == 0 && genePool.size() > 1) {
+		if (rand() % 2 == 0 && genePool.size() > 1) {
 			int first = rand() % genePool.size();
 			int second = rand() % genePool.size();
 

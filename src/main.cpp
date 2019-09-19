@@ -8,9 +8,9 @@ int main(){
 
 	srand(time(NULL));
 
-	int initial_num = 1000000;
-	int max_population = 1000000;
-	int die_num = 900000;
+	int initial_num = 100000;
+	int max_population = 100000;
+	int die_num = 60000;
 	int new_entities = 0;
 	
 
